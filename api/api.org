@@ -8,7 +8,8 @@
     "pass": "yot",
     "winner": "player1",
     "loser": "player2",
-    "diff": 3
+    "diff": 3,
+    "red": 0
   }
 #+end_src
 
@@ -21,7 +22,8 @@
       "date": "2021-12-12T14:00:07+08:00",
       "winner": "player1",
       "loser": "player2",
-      "diff": 3
+      "diff": 3,
+      "red": 0
     }
   }
 #+end_src
@@ -37,7 +39,8 @@ This will get at most 20 records at specific page.
       "date": "2021-12-12T14:00:07+08:00",
       "winner": "player1",
       "loser": "player2",
-      "diff": 3
+      "diff": 3,
+      "red": 0
     }]
   }
 #+end_src

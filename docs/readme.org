@@ -3,3 +3,10 @@
 The default port is 8000.
 
 The default path location is ~/scoreboard.db.
+
+* Snooker
+The snooker has four fields.
+| winner | The name of winner.             |
+| loser  | The name of loser.              |
+| diff   | The difference between balls.   |
+| red    | Whether the winner is red side. |

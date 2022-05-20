@@ -11,6 +11,7 @@ type Snooker struct {
 	Winner string `json:"winner"`
 	Loser  string `json:"loser"`
 	Diff   int    `json:"diff"`
+	Red    int    `json:"red"`
 	Date   string `json:"date"`
 }
 
@@ -20,11 +21,11 @@ type SnookerModel struct {
 
 func (m *SnookerModel) Insert(snooker *Snooker) error {
 	query := `
-INSERT INTO snookers (winner, loser, diff)
-VALUES ($1, $2, $3)
+INSERT INTO snookers (winner, loser, diff, red)
+VALUES ($1, $2, $3, $4)
 RETURNING id, date`
 
-	args := []interface{}{snooker.Winner, snooker.Loser, snooker.Diff}
+	args := []interface{}{snooker.Winner, snooker.Loser, snooker.Diff, snooker.Red}
 
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
@@ -39,7 +40,7 @@ RETURNING id, date`
 
 func (m *SnookerModel) GetAll(page int) ([]*Snooker, int, error) {
 	query := `
-SELECT COUNT(*) OVER(), id, winner, loser, diff, date
+SELECT COUNT(*) OVER(), id, winner, loser, diff, red, date
 FROM snookers
 ORDER BY id DESC
 LIMIT $1 OFFSET $2
@@ -67,6 +68,7 @@ LIMIT $1 OFFSET $2
 			&snooker.Winner,
 			&snooker.Loser,
 			&snooker.Diff,
+			&snooker.Red,
 			&snooker.Date,
 		)
 		if err != nil {

@@ -138,6 +138,7 @@ func (app *application) createSnookerHandler(w http.ResponseWriter, r *http.Requ
 		Winner string `json:"winner"`
 		Loser  string `json:"loser"`
 		Diff   int    `json:"diff"`
+		Red    int    `json:"red"`
 	}
 
 	err := app.readJSON(w, r, &input)
@@ -155,6 +156,7 @@ func (app *application) createSnookerHandler(w http.ResponseWriter, r *http.Requ
 		Winner: input.Winner,
 		Loser:  input.Loser,
 		Diff:   input.Diff,
+		Red:    input.Red,
 	}
 
 	err = app.models.Snookers.Insert(snooker)
