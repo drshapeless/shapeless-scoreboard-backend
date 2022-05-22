@@ -1,4 +1,4 @@
-.PHONY: test build run migration install/init uninstall remove-db reset-db
+.PHONY: test build run clean migration install/init uninstall remove-db reset-db
 
 test :
 	./bin/scoreboard
@@ -8,6 +8,9 @@ build :
 
 run :
 	go run ./cmd/scoreboard
+
+clean:
+	rm ./bin/scoreboard
 
 install : ./bin/scoreboard
 	cp ./bin/scoreboard /usr/local/bin/scoreboard
