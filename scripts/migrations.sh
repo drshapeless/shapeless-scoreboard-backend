@@ -6,6 +6,7 @@ sqlite3 ~/scoreboard.db <<EOF
       winner TEXT NOT NULL,
       loser  TEXT NOT NULL,
       diff   INTEGER NOT NULL,
+      red    INTEGER NOT NULL,
       date   TEXT DEFAULT (datetime('now'))
   );
 

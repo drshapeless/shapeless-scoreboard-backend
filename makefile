@@ -1,3 +1,5 @@
+.PHONY: test build run migration install/init uninstall remove-db reset-db
+
 test :
 	./bin/scoreboard
 
@@ -20,3 +22,8 @@ install/init : ./init/scoreboard.init
 uninstall :
 	rm /usr/local/bin/scoreboard
 	rm ~/scoreboard.db
+
+remove-db :
+	rm ~/scoreboard.db
+
+reset-db : remove-db migration
