@@ -95,6 +95,7 @@ func (app *application) routes() http.Handler {
 	r := chi.NewRouter()
 
 	apiPrefix := "/v1"
+	r.Use(app.enableCORS)
 
 	r.NotFound(app.notFoundResponse)
 	r.MethodNotAllowed(app.methodNotAllowedResponse)
@@ -102,15 +103,32 @@ func (app *application) routes() http.Handler {
 	r.Route(apiPrefix, func(r chi.Router) {
 		r.Post("/snooker/", app.createSnookerHandler)
 		r.Get("/snooker/{page}", app.listSnookerHandler)
+		r.Options("/snooker/", app.preflightHandler)
 
 		r.Post("/dee/", app.createDeeHandler)
 		r.Get("/dee/{page}", app.listDeeHandler)
+		r.Options("/dee/", app.preflightHandler)
 
 		r.Post("/landlord/", app.createLandlordHandler)
 		r.Get("/landlord/{page}", app.listLandlordHandler)
+		r.Options("/landlord/", app.preflightHandler)
 	})
 
 	return r
+}
+
+func (app *application) enableCORS(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Access-Control-Allow-Origin", "*")
+		w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+		w.Header().Set("Access-Control-Allow-Headers", "X-PINGOTHER, Content-Type")
+
+		next.ServeHTTP(w, r)
+	})
+}
+
+func (app *application) preflightHandler(w http.ResponseWriter, r *http.Request) {
+	app.writeJSON(w, http.StatusOK, envelope{"ok": "ok"}, nil)
 }
 
 func (app *application) listSnookerHandler(w http.ResponseWriter, r *http.Request) {
